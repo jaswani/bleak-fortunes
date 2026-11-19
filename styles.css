@@ -1,0 +1,152 @@
+:root {
+  --paper: hsl(40 33% 94%);
+  --paper-deep: hsl(38 28% 88%);
+  --slip: hsl(42 45% 97%);
+  --ink: hsl(220 20% 14%);
+  --ink-soft: hsl(220 10% 38%);
+  --oxblood: hsl(355 55% 36%);
+  --oxblood-dark: hsl(355 58% 28%);
+  --shadow: 0 1px 2px hsl(30 20% 20% / 0.08), 0 12px 32px -12px hsl(30 25% 20% / 0.28);
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", system-ui, sans-serif;
+  /* Subtle paper grain so surfaces do not look flat. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0 0.2 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+  background:
+    var(--grain),
+    radial-gradient(ellipse at top, var(--paper), var(--paper-deep));
+  background-attachment: fixed;
+}
+
+a { color: var(--oxblood); text-underline-offset: 3px; }
+a:hover { color: var(--oxblood-dark); }
+
+.site-header {
+  padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.hero {
+  flex: 1;
+  width: min(100%, 44rem);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 6vh, 4rem) 1.25rem 3rem;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0.75rem auto 2.5rem;
+  max-width: 32rem;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 2.2vw, 1.125rem);
+}
+
+.slip {
+  position: relative;
+  min-height: 11rem;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+  background: var(--grain), var(--slip);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  transform: rotate(-0.6deg);
+}
+
+/* Faint perforated edges, like a slip torn from a fortune cookie. */
+.slip::before, .slip::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  height: 0;
+  border-top: 1px dashed hsl(30 15% 60% / 0.45);
+}
+.slip::before { top: 0.6rem; }
+.slip::after { bottom: 0.6rem; }
+
+.fortune {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.fortune.is-revealed { animation: reveal 600ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+@keyframes reveal {
+  from { opacity: 0; filter: blur(6px); transform: translateY(6px); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+
+.reveal {
+  margin-top: 2.25rem;
+  padding: 0.95rem 2rem;
+  font: 600 1rem/1 var(--sans);
+  letter-spacing: 0.01em;
+  color: var(--slip);
+  background: var(--oxblood);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px -6px hsl(355 55% 25% / 0.55);
+  cursor: pointer;
+  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+.reveal:hover {
+  background: var(--oxblood-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -8px hsl(355 55% 25% / 0.6);
+}
+.reveal:active { transform: translateY(0); }
+.reveal:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.count {
+  min-height: 1.5em;
+  margin: 1rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+.site-footer {
+  padding: 2rem 1.25rem;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+.site-footer p { margin: 0.25rem 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fortune.is-revealed { animation: none; }
+  .reveal { transition: none; }
+  .reveal:hover { transform: none; }
+}

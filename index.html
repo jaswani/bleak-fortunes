@@ -1,3 +1,39 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Bleak Fortunes</title>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bleak Fortunes: Free Funny Fortune Generator</title>
+  <meta name="description" content="Get a free, funny, delightfully gloomy fortune with one click. Original fortunes written in gloriously bad prose. No sign-up, no refunds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/">Bleak Fortunes</a>
+  </header>
+
+  <main class="hero">
+    <h1>Your future, honestly.</h1>
+    <p class="tagline">Original fortunes, written in gloriously bad prose. One click. No refunds.</p>
+
+    <section class="slip" aria-label="Your fortune">
+      <p id="fortune-text" class="fortune" aria-live="polite">Your fortune is waiting. It is not good news.</p>
+    </section>
+
+    <button id="reveal-fortune" class="reveal" type="button">Reveal my fortune</button>
+    <p id="fortune-count" class="count" aria-live="polite"></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Every fortune is an original work, written for entertainment only. Please do not plan your week around it.</p>
+    <p>Prose style inspired by the <a href="https://www.bulwer-lytton.com/" rel="noopener">Bulwer-Lytton Fiction Contest</a>.</p>
+    <p>&copy; 2026 Bleak Fortunes</p>
+  </footer>
+
+  <script src="fortunes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
