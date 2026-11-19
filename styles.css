@@ -110,7 +110,9 @@ h1 {
 }
 
 .reveal {
+  display: inline-block;
   margin-top: 2.25rem;
+  text-decoration: none;
   padding: 0.95rem 2rem;
   font: 600 1rem/1 var(--sans);
   letter-spacing: 0.01em;
