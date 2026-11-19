@@ -2,6 +2,14 @@
   const button = document.getElementById("reveal-fortune");
   const text = document.getElementById("fortune-text");
   const count = document.getElementById("fortune-count");
+  const share = document.getElementById("share-fortune");
+
+  // Phones get the native share sheet; desktops get copy-to-clipboard,
+  // because desktop share sheets are inconsistent and often missing.
+  const useNativeShare =
+    typeof navigator.share === "function" &&
+    window.matchMedia("(pointer: coarse)").matches;
+  const shareLabel = useNativeShare ? "Share this fortune" : "Copy this fortune";
 
   // Shuffle bag: every fortune shows once before any repeats, so a curious
   // visitor never sees the same line twice in a row.
@@ -39,5 +47,35 @@
       revealed === 1
         ? "1 fortune revealed. It does not get better."
         : `${revealed} fortunes revealed. Still no better.`;
+    share.hidden = false;
+    share.textContent = shareLabel;
+  });
+
+  let resetTimer;
+
+  function flash(label) {
+    share.textContent = label;
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { share.textContent = shareLabel; }, 2000);
+  }
+
+  share.addEventListener("click", async () => {
+    const url = window.location.origin + "/";
+    const message = `"${last}" (via Bleak Fortunes)`;
+    if (useNativeShare) {
+      try {
+        await navigator.share({ title: "Bleak Fortunes", text: message, url });
+      } catch (err) {
+        // AbortError means the user closed the sheet; nothing to report.
+        if (err.name !== "AbortError") flash("Could not share");
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(`${message} ${url}`);
+      flash("Copied");
+    } catch {
+      flash("Could not copy");
+    }
   });
 })();
