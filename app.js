@@ -49,6 +49,10 @@
         : `${revealed} fortunes revealed. Still no better.`;
     share.hidden = false;
     share.textContent = shareLabel;
+
+    // GA4 key event, named to match the "fortune" key event in GA4. The guard
+    // keeps the button working on any page that lacks the gtag() stub.
+    if (typeof window.gtag === "function") window.gtag("event", "fortune");
   });
 
   let resetTimer;
